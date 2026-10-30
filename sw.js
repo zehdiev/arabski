@@ -1,5 +1,5 @@
-/* Service worker на „Алиф“: пази приложението в кеша, за да работи без интернет. Версия: 08f69a9b6d */
-const CACHE='alif-08f69a9b6d';
+/* Service worker на „Алиф“: пази приложението в кеша, за да работи без интернет. Версия: 3989e15323 */
+const CACHE='alif-3989e15323';
 const FILES=['./','./index.html','./manifest.webmanifest','./icon-192.png','./icon-512.png','./icon-maskable-512.png','./apple-touch-icon.png','./favicon-32.png'];
 self.addEventListener('install',e=>{e.waitUntil(caches.open(CACHE).then(c=>c.addAll(FILES)).then(()=>self.skipWaiting()))});
 self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(ks=>Promise.all(ks.filter(k=>k.startsWith('alif-')&&k!==CACHE).map(k=>caches.delete(k)))).then(()=>self.clients.claim()))});
