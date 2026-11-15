@@ -23866,7 +23866,7 @@ if('speechSynthesis' in window)speechSynthesis.getVoices();
   window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();ev=e;if(inst)inst.hidden=false});
   if(inst)inst.onclick=async()=>{if(!ev)return;ev.prompt();try{await ev.userChoice}catch(e){}ev=null;inst.hidden=true};
   window.addEventListener('appinstalled',()=>{if(inst)inst.hidden=true});
-  if('serviceWorker' in navigator&&/^https?:/.test(location.protocol))window.addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));
+  if('serviceWorker' in navigator&&/^https?:/.test(location.protocol)){const hadCtl=!!navigator.serviceWorker.controller;let reloaded=false;navigator.serviceWorker.addEventListener('controllerchange',()=>{if(hadCtl&&!reloaded){reloaded=true;location.reload()}});window.addEventListener('load',()=>navigator.serviceWorker.register('sw.js',{updateViaCache:'none'}).then(reg=>{const up=()=>reg.update().catch(()=>{});document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')up()});setInterval(up,30*60*1000)}).catch(()=>{}))}
 })();
 
 /* ---------- екранът да остава включен (Screen Wake Lock) ---------- */
